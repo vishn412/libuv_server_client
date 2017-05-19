@@ -15,4 +15,10 @@ int main(char **argv, int argc) {
 
 	/* Socket Bind*/
 	uv_tcp_bind(server,(const struct sockaddr*)bind_addr, 0);
+
+	/*Socket Listen*/
+
+	/*Socket Accept*/
+
+	/*Read*/
 }
