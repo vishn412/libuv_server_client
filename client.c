@@ -8,6 +8,7 @@ void connect_callback(uv_connect_t* conn_req, int status) {
 	if (rc < 0) {
 		/*Fail*/
 	}
+	printf("Connection Established\n");
 }
 
 int main(char **argv, int argc) {
@@ -16,12 +17,18 @@ int main(char **argv, int argc) {
 
 	uv_connect_t *connect = (uv_connect_t *)malloc(sizeof(uv_connect_t));
 
-	struct sockaddr_in *peer_addr;
+	struct sockaddr_in peer_addr;
 	int rc;
 
-	uv_tcp_init(uv_default_loop(), client);
+	rc = uv_tcp_init(uv_default_loop(), client);
 
-	uv_ip4_addr("127.0.0.1", 12345, peer_addr);
+	if(rc) {
+		printf("Error\n");
+	}
 
-	rc = uv_tcp_connect(connect, client, (const struct sockaddr *)peer_addr , connect_callback);
+	uv_ip4_addr("127.0.0.1", 12345, &peer_addr);
+
+	rc = uv_tcp_connect(connect, client, (const struct sockaddr *)&peer_addr , connect_callback);
+
+	uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
