@@ -3,13 +3,23 @@
 #include <uv.h>
 
 uv_tcp_t *accept_client;
+uv_buf_t buffer;
 
 void allocate_buffer(uv_handle_t *handle, size_t size, uv_buf_t *buf) {
-	buf->base = malloc(size);
-	buf->len = size;
+	buffer.base = malloc(size);
+	buffer.len = size;
+	*buf = buffer;
 }
 
 void read_cb(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
+	if (nread > 0) {
+	    printf("%s\n", buf);
+	    free(buf->base);
+	    buf = NULL;
+	}
+	else  {
+	    printf("ERROR TODO : print error no\n");
+	}
 }
 
 void close_cb(uv_handle_t *handle) {
