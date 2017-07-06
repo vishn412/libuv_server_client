@@ -43,6 +43,7 @@ void accept_callback(uv_stream_t *server, int status) {
 			 /*Error*/
 			 uv_close((uv_handle_t *)accept_client, close_cb);
 		 }
+		 printf("Accepting connection\n");
 
 		 uv_read_start((uv_stream_t *)accept_client,
 				 allocate_buffer,
